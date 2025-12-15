@@ -20,13 +20,29 @@ const ListingSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['active', 'claimed', 'expired']
+        enum: ['active', 'claimed', 'expired'],
+        default: 'active'
     },
 
     donor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+
+    location: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+
+        }
     }
 })
+
+ListingSchema.index({ location: '2dsphere' })
 
 module.exports = mongoose.model("Listing", ListingSchema)
