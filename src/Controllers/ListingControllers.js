@@ -4,7 +4,20 @@ const Transaction = require('../Models/Transaction')
 
 const GetAllListings = async (req, res) => {
     try {
-        const Listings = await Listing.find({ status: 'active' })
+        let QueryObject = { status: 'active' }
+        const { lat, long } = req.query
+        if (lat && long) {
+            QueryObject.location = {
+                $near: {
+                    $geometry: {
+                        type: 'Point',
+                        coordinates: [parseFloat(long), parseFloat(lat)]
+                    },
+                    $maxDistance: 5000
+                }
+            }
+        }
+        const Listings = await Listing.find(QueryObject)
         res.status(200).json({ Listings })
     } catch (error) {
         res.status(500).json({ msg: error })
@@ -13,11 +26,12 @@ const GetAllListings = async (req, res) => {
 
 const CreateListing = async (req, res) => {
     try {
-        const { title, description, quantity, pickupWindow } = req.body
-        const Listings = await Listing.create({ title, description, quantity, pickupWindow })
+        const { title, description, quantity, pickupWindow, location } = req.body
+        const Listings = await Listing.create({ title, description, quantity, pickupWindow, location })
         res.status(201).json({ Listings })
     } catch (error) {
         res.status(500).json({ msg: error })
+        console.log(error);
     }
 }
 

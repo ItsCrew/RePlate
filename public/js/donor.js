@@ -10,22 +10,29 @@ const FormPickupEnd = document.querySelector("#PickupEnd")
 
 ProduceForm.addEventListener("submit", async (e) => {
     e.preventDefault()
-    const payload = {
-        title: FormTitle.value,
-        description: FormDescription.value,
-        quantity: FormQuantity.value,
-        pickupWindow: {
-            start: FormPickupStart.value,
-            end: FormPickupEnd.value
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        console.log(position.coords);
+        const payload = {
+            title: FormTitle.value,
+            description: FormDescription.value,
+            quantity: FormQuantity.value,
+            pickupWindow: {
+                start: FormPickupStart.value,
+                end: FormPickupEnd.value
+            },
+            location: {
+                type: 'Point',
+                coordinates: [position.coords.longitude, position.coords.latitude]
+            }
         }
-    }
+        try {
+            await axios.post('/api/v1/listings', payload)
+            window.location.href = "/Dashboard.html"
+        } catch (error) {
+            console.log(error);
 
-    try {
-        await axios.post('/api/v1/listings', payload)
-        window.location.href = "/Dashboard.html"
-    } catch (error) {
-        console.log(error);
+        }
+    })
 
-    }
 
 })
