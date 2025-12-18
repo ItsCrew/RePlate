@@ -6,8 +6,14 @@ const { Server } = require('socket.io')
 const ConnectDB = require('./src/Config/Connect')
 const listingRoutes = require('./src/Routes/ListingRoutes');
 const PORT = process.env.PORT || 3000
+const authRouter = require('./src/Routes/AuthRoutes');
+const cors = require('cors')
+const path = require('path')
+
 
 const app = express()
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cors())
 const server = http.createServer(app)
 const io = new Server(server)
 app.use((req, res, next) => {
@@ -28,16 +34,17 @@ io.on('connection', (socket) => {
 })
 
 
-
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/listings', listingRoutes);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+});
 
 const start = async () => {
     try {
         await ConnectDB(process.env.PREV_MONGO_URI)
         console.log('Connected to the database succesfully!');
-        server.listen(PORT, () => {
-            console.log(`RePlate Server running on http://localhost:${PORT}`);
-        })
     } catch (error) {
         console.log(error)
     }
@@ -45,3 +52,4 @@ const start = async () => {
 
 start()
 
+module.exports = app
