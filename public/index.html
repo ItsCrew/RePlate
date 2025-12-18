@@ -4,14 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RePlate</title>
+    <title>RePlate - Reduce Food Waste, Feed Communities</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <h1>EEEEEEEEEEEEEEe</h1>
+<body class="landing-page">
+    <div class="landing-container">
+        <header class="landing-header">
+            <div class="logo">
+                <h1>🍽️ RePlate</h1>
+            </div>
+        </header>
+
+        <main class="landing-main">
+            <section class="hero-section">
+                <h2 class="hero-title">Fight Food Waste, Feed Communities</h2>
+                <p class="hero-subtitle">Connect restaurants with surplus food to people who need it. Together, we can
+                    reduce waste and make a difference.</p>
+
+                <div class="cta-buttons">
+                    <a href="Donor.html" class="btn btn-primary">
+                        <span class="btn-icon">🏪</span>
+                        <span class="btn-text">List Your Food</span>
+                        <span class="btn-description">Restaurant owners - list surplus food</span>
+                    </a>
+
+                    <a href="Dashboard.html" class="btn btn-secondary">
+                        <span class="btn-icon">🛒</span>
+                        <span class="btn-text">Browse Available Food</span>
+                        <span class="btn-description">Find and claim food near you</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Reduce Waste</h3>
+                    <p>Help prevent perfectly good food from ending up in landfills</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Location Based</h3>
+                    <p>Find food listings near you for easy pickup</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Updates</h3>
+                    <p>Get instant notifications when food becomes available</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="landing-footer">
+            <p>&copy; 2025 RePlate. Making a difference, one plate at a time.</p>
+        </footer>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
-
     <script>
         const socket = io();
     </script>

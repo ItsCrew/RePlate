@@ -1,3 +1,4 @@
+const socket = io()
 const ProduceForm = document.querySelector(".ProduceForm")
 const SubmitForm = document.querySelector(".SubmitForm")
 const FormTitle = document.querySelector("#title")

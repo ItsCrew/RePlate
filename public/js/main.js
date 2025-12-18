@@ -3,34 +3,45 @@ const container = document.getElementById("ListContainer")
 
 
 async function LoadListing() {
-    try {
-        const response = await axios.get('/api/v1/Listings')
-        const listings = response.data.Listings;
-
-        listings.forEach(({ _id, title, description, quantity, pickupWindow, status, donor }) => {
+    const renderData = (listings) => {
+        container.innerHTML = ""
+        listings.forEach(({ _id, title, quantity }) => {
             const ItemList = document.createElement("li")
             const ClaimButton = document.createElement("button")
             ClaimButton.innerHTML = "Claim!"
 
-            if (ClaimButton) {
-                ClaimButton.addEventListener("click", () => {
-                    ClaimFood(_id)
-                })
-            }
+            ClaimButton.addEventListener("click", () => ClaimFood(_id))
 
             ItemList.innerHTML = `
-            <div>Item: ${title}</div>
-            <div id="${_id}">Quantity: ${quantity}</div>
+                <div>Item: ${title}</div>
+                <div id="${_id}">Quantity: ${quantity}</div>
             `
-
-            if (container) {
-                ItemList.appendChild(ClaimButton)
-                container.appendChild(ItemList)
-            }
-        });
-    } catch (error) {
-        console.log(error);
+            ItemList.appendChild(ClaimButton)
+            container.appendChild(ItemList)
+        })
     }
+
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            const lat = position.coords.latitude
+            const long = position.coords.longitude
+            try {
+                const response = await axios.get(`/api/v1/Listings?lat=${lat}&long=${long}`)
+                renderData(response.data.Listings)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        async (error) => {
+            try {
+                const response = await axios.get('/api/v1/Listings')
+                renderData(response.data.Listings)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    )
 }
 
 LoadListing()
