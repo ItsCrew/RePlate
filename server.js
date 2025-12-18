@@ -8,11 +8,9 @@ const listingRoutes = require('./src/Routes/ListingRoutes');
 const PORT = process.env.PORT || 3000
 const authRouter = require('./src/Routes/AuthRoutes');
 const cors = require('cors')
-const path = require('path')
-
 
 const app = express()
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors())
 const server = http.createServer(app)
 const io = new Server(server)
@@ -22,8 +20,6 @@ app.use((req, res, next) => {
 })
 
 app.use(express.json())
-
-app.use(express.static(path.join(__dirname, 'public')))
 
 io.on('connection', (socket) => {
     console.log("A user has logged in!", socket.id);
