@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -32,6 +33,20 @@ const UserSchema = new mongoose.Schema({
         }
     }
 })
+
+
+UserSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        return
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+})
+
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password)
+}
 
 UserSchema.index({ location: '2dsphere' })
 

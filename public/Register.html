@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RePlate - Register</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="page-nav">
+        <a href="index.html" class="nav-logo">🍽️ RePlate</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="Login.html">Login</a>
+        </div>
+    </nav>
+
+    <main>
+        <form class="ProduceForm" id="register-form">
+            <h1>Create an Account</h1>
+
+            <label for="reg-name">Name</label>
+            <input id="reg-name" name="name" type="text" placeholder="Your name" required />
+
+            <label for="reg-email">Email</label>
+            <input id="reg-email" name="email" type="email" placeholder="you@example.com" required />
+
+            <label for="reg-password">Password</label>
+            <input id="reg-password" name="password" type="password" placeholder="••••••••" required />
+
+            <label for="reg-role">Role</label>
+            <select id="reg-role" name="role" required>
+                <option value="">Select your role</option>
+                <option value="donor">Restaurant / Donor</option>
+                <option value="consumer">Consumer</option>
+            </select>
+
+            <p class="text-center mt-1" style="font-size: 0.85rem; color: var(--text-light);">
+                We'll use your current location to find nearby listings.
+            </p>
+
+            <button type="submit" class="SubmitForm">Register</button>
+
+            <p class="auth-alt text-center mt-2">
+                Already have an account?
+                <a href="Login.html">Login here</a>
+            </p>
+
+            <p id="register-error" class="auth-error text-center mt-2" style="display: none;"></p>
+        </form>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/auth.js"></script>
+</html>
+
+

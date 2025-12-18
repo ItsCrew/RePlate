@@ -1,16 +1,27 @@
-const socket = io()
-const ProduceForm = document.querySelector(".ProduceForm")
-const SubmitForm = document.querySelector(".SubmitForm")
-const FormTitle = document.querySelector("#title")
-const FormDescription = document.querySelector("#Description")
-const FormQuantity = document.querySelector("#Quantity")
-const FormPickupStart = document.querySelector("#PickupStart")
-const FormPickupEnd = document.querySelector("#PickupEnd")
+const socket = io();
+const ProduceForm = document.querySelector('.ProduceForm');
+const SubmitForm = document.querySelector('.SubmitForm');
+const FormTitle = document.querySelector('#title');
+const FormDescription = document.querySelector('#Description');
+const FormQuantity = document.querySelector('#Quantity');
+const FormPickupStart = document.querySelector('#PickupStart');
+const FormPickupEnd = document.querySelector('#PickupEnd');
 
 
 
-ProduceForm.addEventListener("submit", async (e) => {
-    e.preventDefault()
+ProduceForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const token =
+        (window.RePlateAuth && window.RePlateAuth.getToken && window.RePlateAuth.getToken()) ||
+        localStorage.getItem('replate_token');
+
+    if (!token) {
+        alert('You need to be logged in to list food. Redirecting to login page.');
+        window.location.href = '/Login.html';
+        return;
+    }
+
     navigator.geolocation.getCurrentPosition(async (position) => {
         console.log(position.coords);
         const payload = {
@@ -19,21 +30,23 @@ ProduceForm.addEventListener("submit", async (e) => {
             quantity: FormQuantity.value,
             pickupWindow: {
                 start: FormPickupStart.value,
-                end: FormPickupEnd.value
+                end: FormPickupEnd.value,
             },
             location: {
                 type: 'Point',
-                coordinates: [position.coords.longitude, position.coords.latitude]
-            }
-        }
+                coordinates: [position.coords.longitude, position.coords.latitude],
+            },
+        };
         try {
-            await axios.post('/api/v1/listings', payload)
-            window.location.href = "/Dashboard.html"
+            await axios.post('/api/v1/listings', payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            window.location.href = '/Dashboard.html';
         } catch (error) {
             console.log(error);
-
+            alert('Failed to create listing. Please try again.');
         }
-    })
-
-
-})
+    });
+});

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RePlate - Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="page-nav">
+        <a href="index.html" class="nav-logo">🍽️ RePlate</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="Register.html">Register</a>
+        </div>
+    </nav>
+
+    <main>
+        <form class="ProduceForm" id="login-form">
+            <h1>Login</h1>
+
+            <label for="login-email">Email</label>
+            <input id="login-email" name="email" type="email" placeholder="you@example.com" required />
+
+            <label for="login-password">Password</label>
+            <input id="login-password" name="password" type="password" placeholder="••••••••" required />
+
+            <button type="submit" class="SubmitForm">Login</button>
+
+            <p class="auth-alt text-center mt-2">
+                Don't have an account?
+                <a href="Register.html">Register here</a>
+            </p>
+
+            <p id="login-error" class="auth-error text-center mt-2" style="display: none;"></p>
+        </form>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/auth.js"></script>
+
+</html>
